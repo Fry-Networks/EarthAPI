@@ -1,0 +1,147 @@
+[
+    {
+        "macAddress": "30:C6:F7:1D:23:48",
+        "info": {
+            "name": "WeatherXM",
+            "coords": {
+                "coords": {
+                    "lon": -92.5054325,
+                    "lat": 44.09474729999999
+                },
+                "address": "6520 Clarkia Dr NW, Rochester, MN 55901, USA",
+                "location": "Rochester",
+                "elevation": 334.5266418457031,
+                "geo": {
+                    "type": "Point",
+                    "coordinates": [
+                        -92.5054325,
+                        44.09474729999999
+                    ]
+                }
+            }
+        },
+        "lastData": {}
+    },
+    {
+        "macAddress": "40:F5:20:0F:44:22",
+        "lastData": {
+            "dateutc": 1709565900000,
+            "tempinf": 71.4,
+            "humidityin": 22,
+            "tempf": 40.3,
+            "humidity": 10,
+            "baromabsin": 28.77,
+            "baromrelin": 30,
+            "battout": 1,
+            "dewPoint": -11.89,
+            "feelsLikein": 69.3,
+            "dewPointin": 30.6,
+            "tz": "America/Chicago",
+            "date": "2024-03-04T15:25:00.000Z"
+        },
+        "info": {
+            "name": "FRY Alpha Weather Miner",
+            "coords": {
+                "coords": {
+                    "lat": 44.09474729999999,
+                    "lon": -92.5054325
+                },
+                "address": "6520 Clarkia Dr NW, Rochester, MN 55901, USA",
+                "location": "Rochester",
+                "elevation": 334.5266418457031,
+                "geo": {
+                    "type": "Point",
+                    "coordinates": [
+                        -92.5054325,
+                        44.09474729999999
+                    ]
+                }
+            }
+        }
+    },
+    {
+        "macAddress": "C8:C9:A3:16:AB:C4",
+        "info": {
+            "name": "Ecowitt",
+            "coords": {
+                "coords": {
+                    "lat": 44.09474729999999,
+                    "lon": -92.5054325
+                },
+                "address": "6520 Clarkia Dr NW, Rochester, MN 55901, USA",
+                "location": "Rochester",
+                "elevation": 334.5266418457031,
+                "address_components": [
+                    {
+                        "long_name": "6520",
+                        "short_name": "6520",
+                        "types": [
+                            "street_number"
+                        ]
+                    },
+                    {
+                        "long_name": "Clarkia Drive Northwest",
+                        "short_name": "Clarkia Dr NW",
+                        "types": [
+                            "route"
+                        ]
+                    },
+                    {
+                        "long_name": "Rochester",
+                        "short_name": "Rochester",
+                        "types": [
+                            "locality",
+                            "political"
+                        ]
+                    },
+                    {
+                        "long_name": "Olmsted County",
+                        "short_name": "Olmsted County",
+                        "types": [
+                            "administrative_area_level_2",
+                            "political"
+                        ]
+                    },
+                    {
+                        "long_name": "Minnesota",
+                        "short_name": "MN",
+                        "types": [
+                            "administrative_area_level_1",
+                            "political"
+                        ]
+                    },
+                    {
+                        "long_name": "United States",
+                        "short_name": "US",
+                        "types": [
+                            "country",
+                            "political"
+                        ]
+                    },
+                    {
+                        "long_name": "55901",
+                        "short_name": "55901",
+                        "types": [
+                            "postal_code"
+                        ]
+                    },
+                    {
+                        "long_name": "0285",
+                        "short_name": "0285",
+                        "types": [
+                            "postal_code_suffix"
+                        ]
+                    }
+                ],
+                "geo": {
+                    "type": "Point",
+                    "coordinates": [
+                        -92.5054325,
+                        44.09474729999999
+                    ]
+                }
+            }
+        },
+        "lastData": {}
+    }
+]

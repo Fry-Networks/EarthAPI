@@ -12,6 +12,7 @@ router.post("/api/submitkey", async function (req, res) {
           key: string;
           address: string;
         } = req.body;
+        console.log(req.body)
         console.log(data);
         // Check if the key is already in the database
         const existingKey = (await AmbientModel.exists({ api_key: data.key })) || (await AmbientModel.exists({ token: data.key }));
@@ -57,7 +58,7 @@ router.post("/api/submitkey", async function (req, res) {
     
         res.status(200).send({
           message:
-            "Successfully linked your API Key to your wallet address!\nWe will soon begin to retreive data from your air stations/devices.",
+            "Successfully linked your API Key to your wallet address!\nWe will soon begin to retreive data from your soil stations/devices.",
           status: "SUCCESS",
         });
       } catch (e) {

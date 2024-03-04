@@ -2,10 +2,9 @@ import express from "express";
 import bodyparser from "body-parser";
 import { rateLimit } from "express-rate-limit";
 import { connect } from "../db/connect.js";
-// import submitKeyRoute from "./routes/submitAmbientRoute.js";
-// import submitEcoKeyRoute from "./routes/submitEcoKeyRoute.js";
-// import submitPurpleRoute from "./routes/submitPurpleRoute.js";
-// import submitPebbleRoute from "./routes/submitPebbleRoute.js";
+import submitAmbientKeyRoute from "./routes/submitAmbientRoute.js";
+import submitEcoKeyRoute from "./routes/submitEcoKeyRoute.js";
+
 
 const app = express();
 app.use(bodyparser.json());
@@ -34,10 +33,8 @@ app.get("/", function (req, res) {
   });
 });
 
-// app.use(submitKeyRoute);
-// app.use(submitEcoKeyRoute);
-// app.use(submitPurpleRoute);
-// app.use(submitPebbleRoute)
+app.use(submitAmbientKeyRoute);
+app.use(submitEcoKeyRoute);
 
 export async function startApi() {
   await connect();
