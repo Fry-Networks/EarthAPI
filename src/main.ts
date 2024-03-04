@@ -10,7 +10,6 @@ import { createClientForEcoWittKey } from "./devices/ecowitt.js";
 const ecowittClients: Map<string, string> = new Map();
 const ambientClients: Map<string, ambient> = new Map();
 
-
 // main function
 const startApp = async () => {
     console.log("startApp")

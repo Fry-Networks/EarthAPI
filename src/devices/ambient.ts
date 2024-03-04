@@ -2,6 +2,7 @@
 import ambient, { Device } from "ambient-weather-api";
 import { SoilAccountModel, AmbientAccount, AmbientModel } from "../db/models/soil_accounts.js";
 import { AmbientDataModel } from "../db/models/soil_data.js";
+
 const ambientApplicationKey = process.env.AW_APPLICATION_KEY!;
 
 export const createClientForAmbientKey = async (ambientClients: Map<string, ambient>, ObjectId: string) => {
