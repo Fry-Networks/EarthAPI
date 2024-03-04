@@ -1,6 +1,6 @@
 import express from "express";
 import axios from "axios";
-import { EcowittModel } from "../../db/models/air_accounts.js";
+import { EcowittModel } from "../../db/models/soil_accounts.js";
 import { getUserByAddress } from "../../db/models/users-schema.js";
 import { newApiKeyEvent } from "../../db/connect.js";
 

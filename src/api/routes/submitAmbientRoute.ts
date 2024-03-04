@@ -1,5 +1,5 @@
 import express from "express";
-import { AmbientModel } from "../../db/models/air_accounts.js";
+import { AmbientModel } from "../../db/models/soil_accounts.js";
 import axios from "axios";
 import { getUserByAddress } from "../../db/models/users-schema.js";
 import { newApiKeyEvent } from "../../db/connect.js";
