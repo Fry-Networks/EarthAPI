@@ -54,4 +54,5 @@ export async function connect() {
     });
 }
 
+// export an EventEmitter for ApiKeyEvents
 export const newApiKeyEvent = new EventEmitter();

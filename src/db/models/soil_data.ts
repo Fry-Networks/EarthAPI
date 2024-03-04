@@ -48,47 +48,87 @@ export interface AmbientData extends BaseSoilData {
 }
 
 const EcowittDataSchema = new mongoose.Schema({
-    pm25_ch1: {
-        real_time_aqi: { type: Number, required: false },
-        pm25: { type: Number, required: false },
-        '24_hours_aqi': { type: Number, required: false },
+    soiltemp1f: {
+
     },
-    pm25_ch2: {
-        real_time_aqi: { type: Number, required: false },
-        pm25: { type: Number, required: false },
-        '24_hours_aqi': { type: Number, required: false },
+    soiltemp2f: {
+
     },
-    pm25_ch3: {
-        real_time_aqi: { type: Number, required: false },
-        pm25: { type: Number, required: false },
-        '24_hours_aqi': { type: Number, required: false },
+    soiltemp3f: {
+
     },
-    pm25_ch4: {
-        real_time_aqi: { type: Number, required: false },
-        pm25: { type: Number, required: false },
-        '24_hours_aqi': { type: Number, required: false },
+    soiltemp4f: {
+
     },
-    pm10_aqi_combo: {
-        real_time_aqi: { type: Number, required: false },
-        pm10: { type: Number, required: false },
+    soiltemp5f: {
+
     },
-    pm1_aqi_combo: {
-        real_time_aqi: { type: Number, required: false },
-        pm1: { type: Number, required: false },
+    soiltemp6f: {
+
     },
-    pm4_aqi_combo: {
-        real_time_aqi: { type: Number, required: false },
-        pm4: { type: Number, required: false },
+    soiltemp7f: {
+
     },
-    co2_aqi_combo: {
-        co2: { type: Number, required: false },
-        '24_hours_average': { type: Number, required: false },
+    soiltemp9f: {
+
     },
-    pm25_aqi_combo: {
-        real_time_aqi: { type: Number, required: false },
-        pm25: { type: Number, required: false },
-        '24_hours_aqi': { type: Number, required: false },
+    soiltemp10f: {
+
     },
+    soilhum1: {
+
+    },
+    soilhum2: {
+
+    },
+    soilhum3: {
+
+    },
+    soilhum4: {
+
+    },
+    soilhum5: {
+
+    },
+    soilhum6: {
+
+    },
+    soilhum7: {
+
+    },
+    soilhum8: {
+
+    },
+    soilhum9: {
+
+    },
+    soilhum10: {
+
+    },
+    soiltens1: {
+
+    },
+    soiltens2: {
+
+    },
+    soilten3: {
+
+    },
+    soilten4: {
+    },
+    battsm1 : {
+
+    },
+    battsm2: {
+
+    },
+    battsm3: {
+
+    },
+    battsm4: {
+        
+    }
+
 });
 
 export const EcowittDataModel = BaseSoilModel.discriminator('ecowitt_data', EcowittDataSchema);
