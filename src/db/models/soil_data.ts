@@ -134,47 +134,62 @@ const EcowittDataSchema = new mongoose.Schema({
 export const EcowittDataModel = BaseSoilModel.discriminator('ecowitt_data', EcowittDataSchema);
 
 export interface EcowittData extends BaseSoilData {
-    pm25_ch1?: {
-        real_time_aqi?: number;
-        pm25?: number;
-        '24_hours_aqi'?: number;
-    };
-    pm25_ch2?: {
-        real_time_aqi?: number;
-        pm25?: number;
-        '24_hours_aqi'?: number;
-    };
-    pm25_ch3?: {
-        real_time_aqi?: number;
-        pm25?: number;
-        '24_hours_aqi'?: number;
-    };
-    pm25_ch4?: {
-        real_time_aqi?: number;
-        pm25?: number;
-        '24_hours_aqi'?: number;
-    };
-    pm10_aqi_combo?: {
-        real_time_aqi?: number;
-        pm10?: number;
-    };
-    pm1_aqi_combo?: {
-        real_time_aqi?: number;
-        pm1?: number;
-    };
-    pm4_aqi_combo?: {
-        real_time_aqi?: number;
-        pm4?: number;
-    };
-    co2_aqi_combo?: {
-        co2?: number;
-        '24_hours_average'?: number;
-    };
-    pm25_aqi_combo?: {
-        real_time_aqi?: number;
-        pm25?: number;
-        '24_hours_aqi'?: number;
-    };
+    soil_ch1: {
+        soilmoisture: {
+          time: number,
+          unit: "%",
+          value: number
+        }
+      },
+      soil_ch2: {
+        soilmoisture: {
+          time: number,
+          unit: "%",
+          value: number
+        }
+      },
+      soil_ch3: {
+        soilmoisture: {
+          time: number,
+          unit: "%",
+          value: number
+        }
+      },
+      soil_ch4: {
+        soilmoisture: {
+          time: number,
+          unit: "%",
+          value: number
+        }
+      },
+      soil_ch5: {
+        soilmoisture: {
+          time: number,
+          unit: "%",
+          value: number
+        }
+      },
+      soil_ch6: {
+        soilmoisture: {
+          time: number,
+          unit: "%",
+          value: number
+        }
+      },
+      soil_ch7: {
+        soilmoisture: {
+          time: number,
+          unit: "%",
+          value: number
+        }
+      },
+      soil_ch8: {
+        "soilmoisture": {
+          time: number,
+          unit: "%",
+          value: number
+        }
+      },
 }
 
 interface SensorStats {
