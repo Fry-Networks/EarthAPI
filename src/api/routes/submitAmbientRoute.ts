@@ -6,12 +6,13 @@ import { newApiKeyEvent } from "../../db/connect.js";
 
 const router = express.Router();
 
-router.post("/api/submitkey", async function (req, res) {
+router.post("/api/submitAmbientKey", async function (req, res) {
   try {
     const data: {
       key: string;
       address: string;
     } = req.body;
+
     console.log(req.body)
     console.log(data);
     // Check if the key is already in the database
