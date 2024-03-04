@@ -1,7 +1,7 @@
 import express from "express";
 import bodyparser from "body-parser";
 // import { rateLimit } from "express-rate-limit";
-// import { connect } from "../db/connect.js";
+import { connect } from "../db/connect.js";
 // import submitKeyRoute from "./routes/submitAmbientRoute.js";
 // import submitEcoKeyRoute from "./routes/submitEcoKeyRoute.js";
 // import submitPurpleRoute from "./routes/submitPurpleRoute.js";
