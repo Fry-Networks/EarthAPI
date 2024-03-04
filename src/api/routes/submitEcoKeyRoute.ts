@@ -7,6 +7,7 @@ import { newApiKeyEvent } from "../../db/connect.js";
 const router = express.Router();
 
 router.post("/api/submitEcokey", async function (req, res) {
+  console.log("submitEcoKey")
     try {
         const data: {
           key: string;
