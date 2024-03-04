@@ -16,6 +16,7 @@ const startApp = async () => {
     console.log("startApp")
     await startApi();
 
+    // Handling for Ambient-Weather devices
     const ambientApiKeys: AmbientAccount[] = await AmbientModel.find({ api_type: { $in: ["ambient"] } });
     for (let account of ambientApiKeys) {
         try {
