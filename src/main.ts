@@ -1,6 +1,9 @@
 // imports
+import { startApi } from "./api/api.js";
 
-// startApp
+// main function
 const startApp = async () => {
     console.log("startApp")
 }
+
+startApp();
