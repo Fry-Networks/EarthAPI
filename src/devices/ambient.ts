@@ -22,7 +22,7 @@ export const createClientForAmbientKey = async (ambientClients: Map<string, ambi
 
     client.connect();
     client.on("connect", () => {
-        console.log(`Connected with key ${account.api_key}`);
+        console.log(`Connected to AmbientWeather with key ${account.api_key}`);
         client.subscribe(account.api_key);
     });
     //@ts-ignore
@@ -32,18 +32,19 @@ export const createClientForAmbientKey = async (ambientClients: Map<string, ambi
         console.log(data.devices.map(getName).join(", "));
 
         const toDb = data.devices.filter(device => device.info.coords).map((device) => {
+            
             return {
                 deviceMAC: device.macAddress,
                 infos: {
                     coords: {
-                        lat: device.info.coords.coords.lat,
-                        lon: device.info.coords.coords.lon,
+                        "lat": device.info.coords.coords.lat,
+                        "lon": device.info.coords.coords.lon,
                     },
                     name: device.info.name,
                 },
             };
         });
-
+        console.log("toDb", toDb)
         if (account.devices !== toDb) {
             accountData.devices = toDb;
             accountData.save();
