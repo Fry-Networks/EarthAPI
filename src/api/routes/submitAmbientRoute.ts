@@ -65,6 +65,7 @@ router.post("/api/submitAmbientKey", async function (req, res) {
       status: "SUCCESS",
     });
   } catch (e) {
+    console.log("error:", e)
     res.status(500).send({
       message: "Internal server error.",
       status: "ERROR",
