@@ -12,7 +12,7 @@ export const createClientForEcoWittKey = async (clients: Map<string, string>, Ob
     const accountApiKey = account.api_key;
     const accountAppKey = account.app_key;
     const accountMac = account.mac;
-    
+
     function getName(device: EcoWittDevice) {
         return device.name;
     }
@@ -89,46 +89,90 @@ const logEcoWitt = async (data: any, deviceInfo: any) => {
     }
     const toDb = new EcowittDataModel({
         timestamp: new Date(parseInt(fullData.time) * 1000),
-        pm25_ch1: {
-            real_time_aqi: storeD?.pm25_ch1?.real_time_aqi,
-            pm25: storeD?.pm25_ch1?.pm25,
-            '24_hours_aqi': storeD?.pm25_ch1["24_hours_aqi"]
+        soil_ch1: {
+            soilmoisture: {
+                time: storeD?.soil_ch1?.soilmoisture?.time,
+                unit: storeD?.soil_ch1?.soilmoisture?.unit,
+                value: storeD?.soil_ch1?.soilmoisture?.value
+            }
         },
-        pm25_ch2: {
-            real_time_aqi: storeD?.pm25_ch2?.real_time_aqi,
-            pm25: storeD?.pm25_ch2?.pm25,
-            '24_hours_aqi': storeD?.pm25_ch2["24_hours_aqi"]
+        soil_ch2: {
+            soilmoisture: {
+                time: storeD?.soil_ch2?.soilmoisture?.time,
+                unit: storeD?.soil_ch2?.soilmoisture?.unit,
+                value: storeD?.soil_ch2?.soilmoisture?.value
+            }
         },
-        pm25_ch3: {
-            real_time_aqi: storeD?.pm25_ch3?.real_time_aqi,
-            pm25: storeD?.pm25_ch3?.pm25,
-            '24_hours_aqi': storeD?.pm25_ch3["24_hours_aqi"]
+        soil_ch3: {
+            soilmoisture: {
+                time: storeD?.soil_ch3?.soilmoisture?.time,
+                unit: storeD?.soil_ch3?.soilmoisture?.unit,
+                value: storeD?.soil_ch3?.soilmoisture?.value
+            }
         },
-        pm25_ch4: {
-            real_time_aqi: storeD?.pm25_ch4?.real_time_aqi,
-            pm25: storeD?.pm25_ch4?.pm25,
-            '24_hours_aqi': storeD?.pm25_ch4["24_hours_aqi"]
+        soil_ch4: {
+            soilmoisture: {
+                time: storeD?.soil_ch4?.soilmoisture?.time,
+                unit: storeD?.soil_ch4?.soilmoisture?.unit,
+                value: storeD?.soil_ch4?.soilmoisture?.value
+            }
         },
-        pm10_aqi_combo: {
-            real_time_aqi: storeD?.pm10_aqi_combo?.real_time_aqi,
-            pm10: storeD?.pm10_aqi_combo?.pm10,
+        soil_ch5: {
+            soilmoisture: {
+                time: storeD?.soil_ch5?.soilmoisture?.time,
+                unit: storeD?.soil_ch5?.soilmoisture?.unit,
+                value: storeD?.soil_ch5?.soilmoisture?.value
+            }
         },
-        pm1_aqi_combo: {
-            real_time_aqi: storeD?.pm1_aqi_combo?.real_time_aqi,
-            pm1: storeD?.pm1_aqi_combo?.pm1,
+        soil_ch6: {
+            soilmoisture: {
+                time: storeD?.soil_ch6?.soilmoisture?.time,
+                unit: storeD?.soil_ch6?.soilmoisture?.unit,
+                value: storeD?.soil_ch6?.soilmoisture?.value
+            }
         },
-        pm4_aqi_combo: {
-            real_time_aqi: storeD?.pm4_aqi_combo?.real_time_aqi,
-            pm4: storeD?.pm4_aqi_combo?.pm4,
+        soil_ch7: {
+            soilmoisture: {
+                time: storeD?.soil_ch7?.soilmoisture?.time,
+                unit: storeD?.soil_ch7?.soilmoisture?.unit,
+                value: storeD?.soil_ch7?.soilmoisture?.value
+            }
         },
-        co2_aqi_combo: {
-            co2: storeD?.co2_aqi_combo?.co2,
-            '24_hours_average': storeD?.co2_aqi_combo["24_hours_average"]
+        soil_ch8: {
+            soilmoisture: {
+                time: storeD?.soil_ch8?.soilmoisture?.time,
+                unit: storeD?.soil_ch8?.soilmoisture?.unit,
+                value: storeD?.soil_ch8?.soilmoisture?.value
+            }
         },
-        pm25_aqi_combo: {
-            real_time_aqi: storeD?.pm25_aqi_combo?.real_time_aqi,
-            pm25: storeD?.pm25_aqi_combo?.pm25,
-            '24_hours_aqi': storeD?.pm25_aqi_combo["24_hours_aqi"]
+        soilmoisture_sensor_ch4: {
+            soilmoisture: {
+                time: storeD?.soilmoisture_sensor_ch4?.soilmoisture?.time,
+                unit: storeD?.soilmoisture_sensor_ch4?.soilmoisture?.unit,
+                value: storeD?.soilmoisture_sensor_ch4?.soilmoisture?.value
+            }
+        },
+        soilmoisture_sensor_ch5: {
+            soilmoisture: {
+                time: storeD?.soilmoisture_sensor_ch5?.soilmoisture?.time,
+                unit: storeD?.soilmoisture_sensor_ch5?.soilmoisture?.unit,
+                value: storeD?.soilmoisture_sensor_ch5?.soilmoisture?.value
+            }
+        },
+        soilmoisture_sensor_ch6: {
+            time: storeD?.soilmoisture_sensor_ch6?.soilmoisture?.time,
+            unit: storeD?.soilmoisture_sensor_ch6?.soilmoisture?.unit,
+            value: storeD?.soilmoisture_sensor_ch6?.soilmoisture?.value
+        },
+        soilmoisture_sensor_ch7: {
+            time: storeD?.soilmoisture_sensor_ch7?.soilmoisture?.time,
+            unit: storeD?.soilmoisture_sensor_ch7?.soilmoisture?.unit,
+            value: storeD?.soilmoisture_sensor_ch7?.soilmoisture?.value
+        },
+        soilmoisture_sensor_ch8: {
+            time: storeD?.soilmoisture_sensor_ch8?.soilmoisture?.time,
+            unit: storeD?.soilmoisture_sensor_ch8?.soilmoisture?.unit,
+            value: storeD?.soilmoisture_sensor_ch8?.soilmoisture?.value
         },
         metadata: {
             data_type: 'ecowitt',
