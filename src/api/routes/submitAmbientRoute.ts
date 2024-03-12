@@ -7,17 +7,19 @@ import { newApiKeyEvent } from "../../db/connect.js";
 const router = express.Router();
 
 router.post("/api/submitAmbientKey", async function (req, res) {
+  // attempt code
   try {
     const data: {
       key: string;
       address: string;
     } = req.body;
 
-    console.log(req.body)
-    console.log(data);
+    console.log("req.body:",req.body)
+    console.log("data:",data);
+
     // Check if the key is already in the database
     const existingKey = (await AmbientModel.exists({ api_key: data.key })) || (await AmbientModel.exists({ token: data.key }));
-
+    console.log("existingKey:", existingKey)
     if (existingKey) {
       return void res.status(409).send({
         message: "Key already exists in database.",
@@ -63,6 +65,7 @@ router.post("/api/submitAmbientKey", async function (req, res) {
       status: "SUCCESS",
     });
   } catch (e) {
+    console.log("error:", e)
     res.status(500).send({
       message: "Internal server error.",
       status: "ERROR",

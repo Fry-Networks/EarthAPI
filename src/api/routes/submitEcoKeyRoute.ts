@@ -15,7 +15,7 @@ router.post("/api/submitEcokey", async function (req, res) {
           address: string;
         } = req.body;
         // const d: any = await axios.get(`https://api.ecowitt.net/api/v3/device/list?application_key=${data.app_key}&api_key=${data.key}`);
-        console.log(data);
+        console.log("data", data);
         // Check if the key is already in the database
         const existingKey = await EcowittModel.exists({
           api_key: data.key,
@@ -44,9 +44,12 @@ router.post("/api/submitEcokey", async function (req, res) {
           const d: any = await axios.get(
             `https://api.ecowitt.net/api/v3/device/list?application_key=${data.app_key}&api_key=${data.key}`
           );
+          console.log("data", d.data)
+          console.log("appkey:", d.data.app_key)
+
           if (d.data.code !== 0) {
             return void res.status(400).send({
-              message: "Key is invalid. (Didn't pass API check). Code is 0.",
+              message: "Key is invalid. (Didn't pass API check). Code is not 0.",
               status: "ERROR",
             });
           }
