@@ -10,8 +10,9 @@ export const createClientForEcoWittKey = async (clients: Map<string, string>, Ob
     const account: EcowittAccount = (await EcowittModel.findById(ObjectId))!;
 
     const accountApiKey = account.api_key;
-
     const accountAppKey = account.app_key;
+    const accountMac = account.mac;
+    
     function getName(device: EcoWittDevice) {
         return device.name;
     }
@@ -20,7 +21,7 @@ export const createClientForEcoWittKey = async (clients: Map<string, string>, Ob
 
     try {
         const data: { data: EcoWittDevicesResponse } = await axios.get(
-            `https://api.ecowitt.net/api/v3/device/list?application_key=${accountAppKey}&api_key=${accountApiKey}`
+            `https://api.ecowitt.net/api/v3/device/list?application_key=${accountAppKey}&api_key=${accountApiKey}&mac=${accountMac}`
         );
         console.log(
             `Subscribed to ${data?.data?.data?.list?.length} devices`,

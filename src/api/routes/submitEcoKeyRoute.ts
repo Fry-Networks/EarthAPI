@@ -12,6 +12,7 @@ router.post("/api/submitEcokey", async function (req, res) {
         const data: {
           key: string;
           app_key: string;
+          mac: string;
           address: string;
         } = req.body;
         // const d: any = await axios.get(`https://api.ecowitt.net/api/v3/device/list?application_key=${data.app_key}&api_key=${data.key}`);
@@ -42,7 +43,7 @@ router.post("/api/submitEcokey", async function (req, res) {
         // Check if the key is valid by making a request to the ecowitt api
         try {
           const d: any = await axios.get(
-            `https://api.ecowitt.net/api/v3/device/list?application_key=${data.app_key}&api_key=${data.key}`
+            `https://api.ecowitt.net/api/v3/device/list?application_key=${data.app_key}&api_key=${data.key}&mac=${data.mac}`
           );
           console.log("data", d.data)
           console.log("appkey:", d.data.app_key)
@@ -64,12 +65,14 @@ router.post("/api/submitEcokey", async function (req, res) {
     
         const key = new EcowittModel({
           api_key: data.key,
+          app_key: data.app_key,
+          mac: data.mac,
           user_id: user._id,
           address: data.address,
           timestamp: new Date(),
           api_type: "ecowitt",
-          app_key: data.app_key,
         });
+
         await key.save();
         newApiKeyEvent.emit("newApiKey", key._id);
     
