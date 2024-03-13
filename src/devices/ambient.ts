@@ -28,6 +28,7 @@ export const createClientForAmbientKey = async (ambientClients: Map<string, ambi
     //@ts-ignore
     client.on("error", console.error);
     client.on("subscribed", (data) => {
+        console.log("subscribed data:",data)
         console.log("Subscribed to " + data.devices.length + " device(s): ");
         console.log(data.devices.map(getName).join(", "));
 
