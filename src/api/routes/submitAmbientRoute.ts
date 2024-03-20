@@ -56,6 +56,7 @@ router.post("/api/submitAmbientKey", async function (req, res) {
       timestamp: new Date(),
       api_type: "ambient",
     });
+
     await key.save();
     newApiKeyEvent.emit("newApiKey", key._id);
 
@@ -64,6 +65,7 @@ router.post("/api/submitAmbientKey", async function (req, res) {
         "Successfully linked your API Key to your wallet address!\nWe will soon begin to retreive data from your soil stations/devices.",
       status: "SUCCESS",
     });
+    
   } catch (e) {
     console.log("error:", e)
     res.status(500).send({
