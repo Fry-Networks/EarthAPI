@@ -14,7 +14,6 @@ router.post("/api/submitAmbientKey", async function (req, res) {
       address: string;
     } = req.body;
 
-    console.log("req.body:",req.body)
     console.log("data:",data);
 
     // Check if the key is already in the database
