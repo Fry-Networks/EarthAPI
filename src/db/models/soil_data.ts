@@ -18,7 +18,7 @@
               timeField: 'timestamp',
               metaField: 'metadata',
               granularity: 'hours',
-          }
+          } 
       }
   );
 

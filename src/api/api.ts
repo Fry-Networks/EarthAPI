@@ -37,6 +37,7 @@ app.use(submitAmbientKeyRoute);
 app.use(submitEcoKeyRoute);
 
 export async function startApi() {
+  console.log("startApi")
   await connect();
   const port = process.env.PORT || 3000;
   app.listen(port, () => {

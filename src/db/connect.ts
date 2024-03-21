@@ -4,6 +4,7 @@ import { EventEmitter } from 'node:events';
 
 export async function connect() {
     // get uri info for connecting to atlas from .env file
+    console.log("connect");
     const uri = process.env.MONGO_URI;
     if (!uri) {
         throw new Error('MONGO_URI not set!');
