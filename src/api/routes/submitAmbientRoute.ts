@@ -18,8 +18,9 @@ router.post("/api/submitAmbientKey", async function (req, res) {
 
     // Check if the key is already in the database
     const existingKey = (await AmbientModel.exists({ api_key: data.key })) || (await AmbientModel.exists({ token: data.key }));
-    console.log("existingKey:", existingKey)
+    
     if (existingKey) {
+      console.log("existingKey:", existingKey)
       return void res.status(409).send({
         message: "Key already exists in database.",
         status: "ERROR",

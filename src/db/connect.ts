@@ -42,11 +42,13 @@ export async function connect() {
             // if the change's operation type is "insert"
             if (change.operationType === 'insert') {
                 // emit a "newApiKey" event
+                console.log("newApiKey");
                 newApiKeyEvent.emit('newApiKey', change.fullDocument._id);
             }
             // handle deletions
             if (change.operationType === 'delete') {
                 // emit a "deleteApiKey" event
+                console.log("deleteApiKey");
                 newApiKeyEvent.emit('deleteApiKey', change.documentKey._id);
             }
         });
