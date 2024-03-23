@@ -10,7 +10,7 @@ export const usersSchema = new mongoose.Schema({
 });
 
 export interface User extends mongoose.Document {
-    email: string,
+    email: { type: string, default: string, required: true }
     address: string,
     byod: {
         licenses: string[],
