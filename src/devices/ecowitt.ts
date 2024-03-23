@@ -69,6 +69,7 @@ export const createClientForEcoWittKey = async (clients: Map<string, string>, Ob
     console.log(devices, "ecowitt devices");
 
     const fetchInterval = async () => {
+        console.log("ecowitt fetch");
         if (!Array.isArray(devices) || devices?.length === 0) return;
         await Promise.all(devices?.map((val: any) => fetchDeviceData(val)));
     };
