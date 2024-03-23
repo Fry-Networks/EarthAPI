@@ -14,6 +14,7 @@ const ambientClients: Map<string, ambient> = new Map();
 const startApp = async () => {
     console.log("startApp")
     await startApi();
+    
 
     // Handling for Ambient-Weather devices
     const ambientApiKeys: AmbientAccount[] = await AmbientModel.find({ api_type: { $in: ["ambient"] } });
@@ -31,7 +32,6 @@ const startApp = async () => {
     for (const account of ecoapiKeys) {
         try {
             await createClientForEcoWittKey(ecowittClients, account._id);
-
         }
         catch (e: any) {
             console.log(`Error creating client for ecowitt key ${account.api_key} - ${e.stack}`);
