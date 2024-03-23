@@ -1,7 +1,7 @@
 import mongoose, { mongo } from 'mongoose';
 
 export const usersSchema = new mongoose.Schema({
-    email: { type: String, default: "" },
+    email: { type: String, default: "", required: true },
     address: { type: String, required: true },
     byod: {
         licenses: { type: [String], default: [] },
