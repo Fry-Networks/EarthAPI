@@ -9,7 +9,6 @@ export async function connect() {
     if (!uri) {
         throw new Error('MONGO_URI not set!');
     }
-    console.log('Connecting to MongoDB...');
     
     // connect to mongodb atlas
     await mongoose.connect(uri);
