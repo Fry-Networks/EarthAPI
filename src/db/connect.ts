@@ -32,11 +32,10 @@ export async function connect() {
         console.log('Disconnected from MongoDB!');
     });
 
-
     // upon opening of mongodb, execute this asyncronous function
     mongoose.connection.on('open', async () => {
         // store weather_accounts collection in memory
-        const accountCollection = mongoose.connection.collection('weather_accounts');
+        const accountCollection = mongoose.connection.collection('soil_accounts');
         // watch for changes to "weather_accounts" collection
         const changeStream = accountCollection.watch();
         // upon a change to this collection, execute this function whilst passing the change into the function
