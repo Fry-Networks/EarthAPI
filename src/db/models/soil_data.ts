@@ -1,7 +1,6 @@
   import mongoose, { mongo } from 'mongoose';
 
-  const BaseSoilSchema = new mongoose.Schema(
-      {
+  const BaseSoilSchema = new mongoose.Schema({
           timestamp: Date,
           metadata: {
               data_type: String,
@@ -137,13 +136,13 @@
       
   }
 
-  interface SensorStats {
-      pm2_5: number;
-      pm2_5_10minute: number;
-      pm2_5_30minute: number;
-      pm2_5_60minute: number;
-      pm2_5_6hour: number;
-      pm2_5_24hour: number;
-      pm2_5_1week: number;
-      time_stamp: number;
-  }
+  // interface SensorStats {
+  //     pm2_5: number;
+  //     pm2_5_10minute: number;
+  //     pm2_5_30minute: number;
+  //     pm2_5_60minute: number;
+  //     pm2_5_6hour: number;
+  //     pm2_5_24hour: number;
+  //     pm2_5_1week: number;
+  //     time_stamp: number;
+  // }

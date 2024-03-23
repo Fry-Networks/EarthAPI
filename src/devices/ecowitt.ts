@@ -55,6 +55,7 @@ export const createClientForEcoWittKey = async (clients: Map<string, string>, Ob
     console.log("Hello world devices", devices);
 
     const fetchDeviceData = async (val: any) => {
+        console.log("fetching device data, ", val);
         try {
             const data: EcoWittDeviceData = await axios.get(
                 `https://api.ecowitt.net/api/v3/device/real_time?application_key=${accountAppKey}&api_key=${accountApiKey}&mac=${val?.deviceMAC}&call_back=all`
