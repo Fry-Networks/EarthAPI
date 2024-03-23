@@ -12,6 +12,7 @@ router.post("/api/submitAmbientKey", async function (req, res) {
     const data: {
       key: string;
       address: string;
+      email: string;
     } = req.body;
 
     console.log("data:",data);
@@ -47,7 +48,7 @@ router.post("/api/submitAmbientKey", async function (req, res) {
       });
     }
     // Add the key to the database
-    const user = await getUserByAddress(data.address);
+    const user = await getUserByAddress(data.address, data.email);
 
     const key = new AmbientModel({
       api_key: data.key,

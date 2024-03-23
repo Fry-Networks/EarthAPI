@@ -20,8 +20,8 @@ export interface User extends mongoose.Document {
 
 export const UserModel = mongoose.model<User>('users', usersSchema);
 
-export async function getUserByAddress(address: string): Promise<User> {
-    let user = await UserModel.findOne({ address: address });
-    if (!user) user = await UserModel.create({ address: address });
+export async function getUserByAddress(address: string, email: string): Promise<User> {
+    let user = await UserModel.findOne({ address: address, email: email });
+    if (!user) user = await UserModel.create({ address: address, email: email });
     return user;
 }

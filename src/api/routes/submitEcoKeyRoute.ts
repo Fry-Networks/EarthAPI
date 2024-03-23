@@ -14,6 +14,7 @@ router.post("/api/submitEcokey", async function (req, res) {
           app_key: string;
           mac: string;
           address: string;
+          email: string;
         } = req.body;
         // const d: any = await axios.get(`https://api.ecowitt.net/api/v3/device/list?application_key=${data.app_key}&api_key=${data.key}`);
         console.log("data", data);
@@ -61,7 +62,7 @@ router.post("/api/submitEcokey", async function (req, res) {
           });
         }
         // Add the key to the database
-        const user = await getUserByAddress(data.address);
+        const user = await getUserByAddress(data.address, data.email);
     
         const key = new EcowittModel({
           api_key: data.key,
