@@ -9,7 +9,7 @@ const SoilAccountSchema = new mongoose.Schema({
   user_id: mongoose.Schema.Types.ObjectId,
   timestamp: Date,
   api_type: { type: String, enum: ["ambient", "ecowitt"] },
-  devices: [String],
+  devices:  Array<any>,
 });
 
 
@@ -17,7 +17,7 @@ export interface SoilAccount extends mongoose.Document {
   user_id: mongoose.Schema.Types.ObjectId | string;
   timestamp: Date;
   api_type: API_TYPE;
-  info: String;
+  info: Object;
   devices?: Array<any>;
 }
 
@@ -43,6 +43,14 @@ export const EcowittModel = SoilAccountModel.discriminator<SoilAccount>('ecowitt
 export interface AmbientAccount extends SoilAccount {
   api_type: "ambient";
   api_key: string;
+  deviceMAC: string;
+  info: {
+    name: string;
+    coords: {
+      lat: number;
+      lon: number;
+    }
+  }
 }
 
 export interface EcowittAccount extends SoilAccount {

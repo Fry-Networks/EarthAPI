@@ -17,11 +17,10 @@ const startApp = async () => {
     await startApi();
     
     // Handling for Ambient-Weather devices
-    const ambientApiKeys: AmbientAccount[] = await AmbientModel.find({ api_type: { $in: ["ambient"] } });
+    const ambientApiKeys: AmbientAccount[] = await SoilAccountModel.find({ api_type: "ambient" });
     for (let account of ambientApiKeys) {
         console.log("account", account)
         try {
-            
             await createClientForAmbientKey(ambientClients, account._id);
         }
         catch (e: any) {
@@ -30,10 +29,10 @@ const startApp = async () => {
     }
 
     // Handling for EcoWitt devices
-    const ecoapiKeys: EcowittAccount[] = await EcowittModel.find({ api_type: "ecowitt" });
+    const ecoapiKeys: EcowittAccount[] = await SoilAccountModel.find({ api_type: "ecowitt" });
     for (const account of ecoapiKeys) {
         console.log("account", account)
-        try {
+        try { 
             await createClientForEcoWittKey(ecowittClients, account._id);
         }
         catch (e: any) {

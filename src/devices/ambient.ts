@@ -9,7 +9,7 @@ export const createClientForAmbientKey = async (ambientClients: Map<string, ambi
     if (ambientClients.has(ObjectId)) return;
 
     let accountData: AmbientAccount = (await AmbientModel.findById(ObjectId))!;
-    if (!accountData) { accountData = (await SoilAccountModel.findById(ObjectId))!; }
+    // if (!accountData) { accountData = (await SoilAccountModel.findById(ObjectId))!; }
     const account: AmbientAccount = accountData.toObject();
     const client = new ambient({
         apiKey: account.api_key,
@@ -30,21 +30,34 @@ export const createClientForAmbientKey = async (ambientClients: Map<string, ambi
     client.on("subscribed", (data) => {
         console.log("subscribed data:",data)
         console.log("Subscribed to " + data.devices.length + " device(s): ");
+        // log all the names of devices.
         console.log(data.devices.map(getName).join(", "));
-
-        const toDb = data.devices.filter(device => device.info.coords).map((device) => {
-            
+        const toDb = data.devices.map((device) => {
             return {
                 deviceMAC: device.macAddress,
-                infos: {
+                info: {
+                    name: getName(device),
                     coords: {
                         "lat": device.info.coords.coords.lat,
                         "lon": device.info.coords.coords.lon,
-                    },
-                    name: device.info.name,
+                    }
                 },
             };
         });
+        // need to filter out devices without coords
+        // const toDb = data.devices.filter(device => device.info.coords).map((device) => {
+        //     console.log("device:!", device)
+        //     return {
+        //         deviceMAC: device.macAddress,
+        //         info: {
+        //             name: getName(device),
+        //             coords: {
+        //                 "lat": device.info.coords.coords.lat,
+        //                 "lon": device.info.coords.coords.lon,
+        //             }
+        //         },
+        //     };
+        // });
         console.log("toDb", toDb)
         if (account.devices !== toDb) {
             accountData.devices = toDb;
