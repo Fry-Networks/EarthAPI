@@ -15,7 +15,7 @@ const ambientClients: Map<string, ambient> = new Map();
 const startApp = async () => {
     console.log("startApp")
     await startApi();
-    
+
     // Handling for Ambient-Weather devices
     const ambientApiKeys: AmbientAccount[] = await SoilAccountModel.find({ api_type: "ambient" });
     for (let account of ambientApiKeys) {
@@ -32,13 +32,32 @@ const startApp = async () => {
     const ecoapiKeys: EcowittAccount[] = await SoilAccountModel.find({ api_type: "ecowitt" });
     for (const account of ecoapiKeys) {
         console.log("account", account)
-        try { 
+        try {
             await createClientForEcoWittKey(ecowittClients, account._id);
         }
         catch (e: any) {
             console.log(`Error creating client for ecowitt key ${account.api_key} - ${e.stack}`);
         }
     }
+
+    newApiKeyEvent.on("newApiKey", async (ObjectId: string) => {
+        const findedApikey = await SoilAccountModel.findById(ObjectId);
+        if (findedApikey?.api_type === "ecowitt") {
+            await createClientForEcoWittKey(ecowittClients, ObjectId);
+        } else if (findedApikey?.api_type === "ambient") {
+            await createClientForAmbientKey(ambientClients, ObjectId);
+        }
+    });
+
+    newApiKeyEvent.on("deleteApiKey", async (ObjectId: string) => {
+        const findedApikey = await SoilAccountModel.findById(ObjectId);
+        console.log(findedApikey)
+        if (findedApikey?.api_type === "ecowitt") {
+            ecowittClients.delete(ObjectId);;
+        } else if (findedApikey?.api_type === "ambient") {
+            ambientClients.delete(ObjectId);
+        }
+    });
 }
 
 startApp();
