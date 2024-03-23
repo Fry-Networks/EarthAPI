@@ -22,7 +22,7 @@ export interface SoilAccount extends mongoose.Document {
 }
 
 // exported model for Soil Accounts. 
-export const SoilAccountModel = mongoose.model('soil_accounts', SoilAccountSchema);
+export const SoilAccountModel = mongoose.model('soil_account', SoilAccountSchema);
 
 const AmbientSchema = new mongoose.Schema({
   api_key: { type: String, required: true },

@@ -11,13 +11,15 @@ const ecowittClients: Map<string, string> = new Map();
 const ambientClients: Map<string, ambient> = new Map();
 
 // main function
+
 const startApp = async () => {
     console.log("startApp")
     await startApi();
     
+    // Handling for Soil Moisture devices
 
     // Handling for Ambient-Weather devices
-    const ambientApiKeys: AmbientAccount[] = await AmbientModel.find({ api_type: { $in: ["ambient"] } });
+    const ambientApiKeys: AmbientAccount[] = await AmbientModel.find({ api_type: { $in: ["ambient_acc"] } });
     for (let account of ambientApiKeys) {
         try {
             await createClientForAmbientKey(ambientClients, account._id);
@@ -28,7 +30,7 @@ const startApp = async () => {
     }
 
     // Handling for EcoWitt devices
-    const ecoapiKeys: EcowittAccount[] = await EcowittModel.find({ api_type: "ecowitt" });
+    const ecoapiKeys: EcowittAccount[] = await EcowittModel.find({ api_type: "ecowitt_acc" });
     for (const account of ecoapiKeys) {
         try {
             await createClientForEcoWittKey(ecowittClients, account._id);
@@ -37,7 +39,6 @@ const startApp = async () => {
             console.log(`Error creating client for ecowitt key ${account.api_key} - ${e.stack}`);
         }
     }
-
 }
 
 startApp();

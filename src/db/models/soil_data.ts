@@ -2,6 +2,7 @@ import mongoose, { mongo } from 'mongoose';
 
 
 const BaseSoilSchema = new mongoose.Schema({
+  devices:[String],
   timestamp: Date,
   metadata: {
     data_type: String,
@@ -36,7 +37,7 @@ export interface BaseSoilData extends mongoose.Document {
 
 }
 
-export const BaseSoilModel = mongoose.model<BaseSoilData>('soil', BaseSoilSchema);
+export const BaseSoilModel = mongoose.model<BaseSoilData>('soil_accounts', BaseSoilSchema);
 
 const AmbientDataSchema = new mongoose.Schema({
 
