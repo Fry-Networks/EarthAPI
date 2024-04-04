@@ -33,7 +33,6 @@ export const AmbientModel = SoilAccountModel.discriminator('ambient_acc', Ambien
 const EcowittSchema = new mongoose.Schema({
   api_key: { type: String, required: true },
   app_key: { type: String, required: true },
-  mac: { type: String, required: true}
 });
 
 export const EcowittModel = SoilAccountModel.discriminator<SoilAccount>('ecowitt_acc', EcowittSchema);

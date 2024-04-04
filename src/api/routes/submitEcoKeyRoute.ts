@@ -8,15 +8,15 @@ const router = express.Router();
 
 router.post("/api/submitEcokey", async function (req, res) {
   console.log("submitEcoKey")
+  let devices: any = [];
     try {
         const data: {
           key: string;
           app_key: string;
-          mac: string;
           address: string;
         } = req.body;
         // const d: any = await axios.get(`https://api.ecowitt.net/api/v3/device/list?application_key=${data.app_key}&api_key=${data.key}`);
-        console.log("data", data);
+        console.log("outgoing data", data);
         // Check if the key is already in the database
         const existingKey = await EcowittModel.exists({
           api_key: data.key,
@@ -43,14 +43,11 @@ router.post("/api/submitEcokey", async function (req, res) {
         // Check if the key is valid by making a request to the ecowitt api
         try {
           const d: any = await axios.get(
-            `https://api.ecowitt.net/api/v3/device/list?application_key=${data.app_key}&api_key=${data.key}&mac=${data.mac}`
+            `https://api.ecowitt.net/api/v3/device/list?application_key=${data.app_key}&api_key=${data.key}`
           );
-          console.log("data", d.data)
-          console.log("appkey:", d.data.app_key)
-
           if (d.data.code !== 0) {
             return void res.status(400).send({
-              message: "Key is invalid. (Didn't pass API check). Code is not 0.",
+              message: "Key is invalid. (Didn't pass API check)",
               status: "ERROR",
             });
           }
@@ -66,7 +63,6 @@ router.post("/api/submitEcokey", async function (req, res) {
         const key = new EcowittModel({
           api_key: data.key,
           app_key: data.app_key,
-          mac: data.mac,
           user_id: user._id,
           address: data.address,
           timestamp: new Date(),
@@ -82,6 +78,7 @@ router.post("/api/submitEcokey", async function (req, res) {
           status: "SUCCESS",
         });
       } catch (e) {
+        console.log("error", e)
         res.status(500).send({
           message: "Internal server error.",
           status: "ERROR",
