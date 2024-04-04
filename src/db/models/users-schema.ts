@@ -1,7 +1,6 @@
 import mongoose, { mongo } from 'mongoose';
 
 export const usersSchema = new mongoose.Schema({
-    email: { type: String, default: "", required: true },
     address: { type: String, required: true },
     byod: {
         licenses: { type: [String], default: [] },
@@ -10,7 +9,6 @@ export const usersSchema = new mongoose.Schema({
 });
 
 export interface User extends mongoose.Document {
-    email: { type: string, default: string, required: true }
     address: string,
     byod: {
         licenses: string[],
@@ -20,8 +18,8 @@ export interface User extends mongoose.Document {
 
 export const UserModel = mongoose.model<User>('users', usersSchema);
 
-export async function getUserByAddress(address: string, email: string): Promise<User> {
-    let user = await UserModel.findOne({ address: address, email: email });
-    if (!user) user = await UserModel.create({ address: address, email: email });
+export async function getUserByAddress(address: string): Promise<User> {
+    let user = await UserModel.findOne({ address: address });
+    if (!user) user = await UserModel.create({ address: address});
     return user;
 }
