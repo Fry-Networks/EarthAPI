@@ -1,6 +1,5 @@
 // imports
-import { StringValueNode } from "graphql";
-import mongoose, { mongo } from "mongoose";
+import mongoose from "mongoose";
 
 type API_TYPE = "ambient" | "ecowitt";
 
@@ -28,14 +27,14 @@ const AmbientSchema = new mongoose.Schema({
   api_key: { type: String, required: true },
 });
 
-export const AmbientModel = SoilAccountModel.discriminator('ambient_acc', AmbientSchema);
+export const AmbientModel = SoilAccountModel.discriminator('ambient_acc_temp', AmbientSchema);
 
 const EcowittSchema = new mongoose.Schema({
   api_key: { type: String, required: true },
   app_key: { type: String, required: true },
 });
 
-export const EcowittModel = SoilAccountModel.discriminator<SoilAccount>('ecowitt_acc', EcowittSchema);
+export const EcowittModel = SoilAccountModel.discriminator<SoilAccount>('ecowitt_acc_temp', EcowittSchema);
 
 // export const EcowittModel = SoilAccountModel.discriminator('ecowitt_acc', EcowittSchema);
 

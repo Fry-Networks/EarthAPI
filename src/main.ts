@@ -1,11 +1,11 @@
 // imports
+import ambient from "ambient-weather-api";
 import { startApi } from "./api/api.js";
 import { newApiKeyEvent } from "./db/connect.js";
-import ambient from "ambient-weather-api";
-import { SoilAccountModel, AmbientAccount, AmbientModel, EcowittAccount, EcowittModel } from "./db/models/soil_accounts.js";
+import { AmbientAccount, SoilAccountModel } from "./db/models/soil_accounts.js";
 
 import { createClientForAmbientKey } from "./devices/ambient.js";
-import { createClientForEcoWittKey } from "./devices/ecowitt.js";
+// import { createClientForEcoWittKey } from "./devices/ecowitt.js";
 
 const ecowittClients: Map<string, string> = new Map();
 const ambientClients: Map<string, ambient> = new Map();
@@ -29,22 +29,23 @@ const startApp = async () => {
     }
 
     // Handling for EcoWitt devices
-    const ecoapiKeys: EcowittAccount[] = await SoilAccountModel.find({ api_type: "ecowitt" });
-    for (const account of ecoapiKeys) {
-        console.log("account", account)
-        try {
-            await createClientForEcoWittKey(ecowittClients, account._id);
-        }
-        catch (e: any) {
-            console.log(`Error creating client for ecowitt key ${account.api_key} - ${e.stack}`);
-        }
-    }
+    // const ecoapiKeys: EcowittAccount[] = await SoilAccountModel.find({ api_type: "ecowitt" });
+    // for (const account of ecoapiKeys) {
+    //     console.log("account", account)
+    //     try {
+    //         await createClientForEcoWittKey(ecowittClients, account._id);
+    //     }
+    //     catch (e: any) {
+    //         console.log(`Error creating client for ecowitt key ${account.api_key} - ${e.stack}`);
+    //     }
+    // }
 
     newApiKeyEvent.on("newApiKey", async (ObjectId: string) => {
         const findedApikey = await SoilAccountModel.findById(ObjectId);
-        if (findedApikey?.api_type === "ecowitt") {
-            await createClientForEcoWittKey(ecowittClients, ObjectId);
-        } else if (findedApikey?.api_type === "ambient") {
+        // if (findedApikey?.api_type === "ecowitt") {
+        //     await createClientForEcoWittKey(ecowittClients, ObjectId);
+        // } 
+        if (findedApikey?.api_type === "ambient") {
             await createClientForAmbientKey(ambientClients, ObjectId);
         }
     });

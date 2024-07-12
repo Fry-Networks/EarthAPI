@@ -1,192 +1,192 @@
 // EcoWitt Miner File
-import axios from "axios";
-import { EcowittAccount, EcowittModel } from "../db/models/soil_accounts.js";
-import { EcoWittDevice, EcoWittDeviceData, EcoWittDevicesResponse } from "../types/ecowittTypes.js";
-import { EcowittDataModel } from "../db/models/soil_data.js";
+// import axios from "axios";
+// import { EcowittAccount, EcowittModel } from "../db/models/soil_accounts.js";
+// import { EcoWittDevice, EcoWittDeviceData, EcoWittDevicesResponse } from "../types/ecowittTypes.js";
+// import { EcowittDataModel } from "../db/models/soil_data.js";
 
-export const createClientForEcoWittKey = async (clients: Map<string, string>, ObjectId: string) => {
-    if (clients.has(ObjectId)) return;
+// export const createClientForEcoWittKey = async (clients: Map<string, string>, ObjectId: string) => {
+//     if (clients.has(ObjectId)) return;
 
-    const account: EcowittAccount = (await EcowittModel.findById(ObjectId))!;
+//     const account: EcowittAccount = (await EcowittModel.findById(ObjectId))!;
 
-    const accountApiKey = account.api_key;
-    const accountAppKey = account.app_key;
-    const accountMac = account.mac;
+//     const accountApiKey = account.api_key;
+//     const accountAppKey = account.app_key;
+//     const accountMac = account.mac;
 
-    function getName(device: EcoWittDevice) {
-        return device.name;
-    }
+//     function getName(device: EcoWittDevice) {
+//         return device.name;
+//     }
 
-    let devices: any = [];
+//     let devices: any = [];
 
-    try {
-        const data: { data: EcoWittDevicesResponse } = await axios.get(
-            `https://api.ecowitt.net/api/v3/device/list?application_key=${accountAppKey}&api_key=${accountApiKey}&mac=${accountMac}`
-        );
-        console.log(
-            `Subscribed to ${data?.data?.data?.list?.length} devices`,
-            data?.data
-        );
-        console.log(data.data?.data?.list?.map(getName).join(", "));
+//     try {
+//         const data: { data: EcoWittDevicesResponse } = await axios.get(
+//             `https://api.ecowitt.net/api/v3/device/list?application_key=${accountAppKey}&api_key=${accountApiKey}&mac=${accountMac}`
+//         );
+//         console.log(
+//             `Subscribed to ${data?.data?.data?.list?.length} devices`,
+//             data?.data
+//         );
+//         console.log(data.data?.data?.list?.map(getName).join(", "));
 
-        const toDb = data?.data?.data?.list?.map((device) => {
-            return {
-                deviceMAC: device.mac,
-                infos: {
-                    coords: {
-                        lat: device.latitude,
-                        lon: device.longitude,
-                    },
-                    name: device.name,
-                },
-            };
-        });
+//         const toDb = data?.data?.data?.list?.map((device) => {
+//             return {
+//                 deviceMAC: device.mac,
+//                 infos: {
+//                     coords: {
+//                         lat: device.latitude,
+//                         lon: device.longitude,
+//                     },
+//                     name: device.name,
+//                 },
+//             };
+//         });
 
-        if (account.devices !== toDb) {
-            account.devices = toDb;
-            account.save();
-            devices = toDb;
-        }
-        console.log(`Created client for ecowitt key ${account.api_key}`);
-    } catch (error) {
-        console.error(error);
-    }
+//         if (account.devices !== toDb) {
+//             account.devices = toDb;
+//             account.save();
+//             devices = toDb;
+//         }
+//         console.log(`Created client for ecowitt key ${account.api_key}`);
+//     } catch (error) {
+//         console.error(error);
+//     }
 
-    console.log("Hello world devices", devices);
+//     console.log("Hello world devices", devices);
 
-    const fetchDeviceData = async (val: any) => {
-        console.log("fetching device data, ", val);
-        try {
-            const data: EcoWittDeviceData = await axios.get(
-                `https://api.ecowitt.net/api/v3/device/real_time?application_key=${accountAppKey}&api_key=${accountApiKey}&mac=${val?.deviceMAC}&call_back=all`
-            );
-            logEcoWitt(data, val);
-        } catch (error) {
-            console.error(error);
-        }
-    };
+//     const fetchDeviceData = async (val: any) => {
+//         console.log("fetching device data, ", val);
+//         try {
+//             const data: EcoWittDeviceData = await axios.get(
+//                 `https://api.ecowitt.net/api/v3/device/real_time?application_key=${accountAppKey}&api_key=${accountApiKey}&mac=${val?.deviceMAC}&call_back=all`
+//             );
+//             logEcoWitt(data, val);
+//         } catch (error) {
+//             console.error(error);
+//         }
+//     };
 
-    console.log(devices, "ecowitt devices");
+//     console.log(devices, "ecowitt devices");
 
-    const fetchInterval = async () => {
-        console.log("ecowitt fetch");
-        if (!Array.isArray(devices) || devices?.length === 0) return;
-        await Promise.all(devices?.map((val: any) => fetchDeviceData(val)));
-    };
+//     const fetchInterval = async () => {
+//         console.log("ecowitt fetch");
+//         if (!Array.isArray(devices) || devices?.length === 0) return;
+//         await Promise.all(devices?.map((val: any) => fetchDeviceData(val)));
+//     };
 
-    setInterval(fetchInterval, 120000);
+//     setInterval(fetchInterval, 120000);
 
-    clients.set(ObjectId, accountApiKey);
+//     clients.set(ObjectId, accountApiKey);
 
-    return;
-};
+//     return;
+// };
 
-const logEcoWitt = async (data: any, deviceInfo: any) => {
-    let fullData: EcoWittDeviceData = data.data;
-    let storeD = fullData.data
-    //log the device if all weather fields are null
-    if (fullData.code !== 0) {
-        console.log("Error with device", deviceInfo.infos.name, fullData.msg);
-        return;
-    }
-    const toDb = new EcowittDataModel({
-        timestamp: new Date(parseInt(fullData.time) * 1000),
-        soil_ch1: {
-            soilmoisture: {
-                time: storeD?.soil_ch1?.soilmoisture?.time,
-                unit: storeD?.soil_ch1?.soilmoisture?.unit,
-                value: storeD?.soil_ch1?.soilmoisture?.value
-            }
-        },
-        soil_ch2: {
-            soilmoisture: {
-                time: storeD?.soil_ch2?.soilmoisture?.time,
-                unit: storeD?.soil_ch2?.soilmoisture?.unit,
-                value: storeD?.soil_ch2?.soilmoisture?.value
-            }
-        },
-        soil_ch3: {
-            soilmoisture: {
-                time: storeD?.soil_ch3?.soilmoisture?.time,
-                unit: storeD?.soil_ch3?.soilmoisture?.unit,
-                value: storeD?.soil_ch3?.soilmoisture?.value
-            }
-        },
-        soil_ch4: {
-            soilmoisture: {
-                time: storeD?.soil_ch4?.soilmoisture?.time,
-                unit: storeD?.soil_ch4?.soilmoisture?.unit,
-                value: storeD?.soil_ch4?.soilmoisture?.value
-            }
-        },
-        soil_ch5: {
-            soilmoisture: {
-                time: storeD?.soil_ch5?.soilmoisture?.time,
-                unit: storeD?.soil_ch5?.soilmoisture?.unit,
-                value: storeD?.soil_ch5?.soilmoisture?.value
-            }
-        },
-        soil_ch6: {
-            soilmoisture: {
-                time: storeD?.soil_ch6?.soilmoisture?.time,
-                unit: storeD?.soil_ch6?.soilmoisture?.unit,
-                value: storeD?.soil_ch6?.soilmoisture?.value
-            }
-        },
-        soil_ch7: {
-            soilmoisture: {
-                time: storeD?.soil_ch7?.soilmoisture?.time,
-                unit: storeD?.soil_ch7?.soilmoisture?.unit,
-                value: storeD?.soil_ch7?.soilmoisture?.value
-            }
-        },
-        soil_ch8: {
-            soilmoisture: {
-                time: storeD?.soil_ch8?.soilmoisture?.time,
-                unit: storeD?.soil_ch8?.soilmoisture?.unit,
-                value: storeD?.soil_ch8?.soilmoisture?.value
-            }
-        },
-        soilmoisture_sensor_ch4: {
-            soilmoisture: {
-                time: storeD?.soilmoisture_sensor_ch4?.soilmoisture?.time,
-                unit: storeD?.soilmoisture_sensor_ch4?.soilmoisture?.unit,
-                value: storeD?.soilmoisture_sensor_ch4?.soilmoisture?.value
-            }
-        },
-        soilmoisture_sensor_ch5: {
-            soilmoisture: {
-                time: storeD?.soilmoisture_sensor_ch5?.soilmoisture?.time,
-                unit: storeD?.soilmoisture_sensor_ch5?.soilmoisture?.unit,
-                value: storeD?.soilmoisture_sensor_ch5?.soilmoisture?.value
-            }
-        },
-        soilmoisture_sensor_ch6: {
-            time: storeD?.soilmoisture_sensor_ch6?.soilmoisture?.time,
-            unit: storeD?.soilmoisture_sensor_ch6?.soilmoisture?.unit,
-            value: storeD?.soilmoisture_sensor_ch6?.soilmoisture?.value
-        },
-        soilmoisture_sensor_ch7: {
-            time: storeD?.soilmoisture_sensor_ch7?.soilmoisture?.time,
-            unit: storeD?.soilmoisture_sensor_ch7?.soilmoisture?.unit,
-            value: storeD?.soilmoisture_sensor_ch7?.soilmoisture?.value
-        },
-        soilmoisture_sensor_ch8: {
-            time: storeD?.soilmoisture_sensor_ch8?.soilmoisture?.time,
-            unit: storeD?.soilmoisture_sensor_ch8?.soilmoisture?.unit,
-            value: storeD?.soilmoisture_sensor_ch8?.soilmoisture?.value
-        },
-        metadata: {
-            data_type: 'ecowitt',
-            deviceMAC: deviceInfo.macAddress || "N/A",
-            location: {
-                lat: deviceInfo.infos.coords.lat,
-                lon: deviceInfo.infos.coords.lon
-            }
-        }
-    });
+// const logEcoWitt = async (data: any, deviceInfo: any) => {
+//     let fullData: EcoWittDeviceData = data.data;
+//     let storeD = fullData.data
+//     //log the device if all weather fields are null
+//     if (fullData.code !== 0) {
+//         console.log("Error with device", deviceInfo.infos.name, fullData.msg);
+//         return;
+//     }
+//     const toDb = new EcowittDataModel({
+//         timestamp: new Date(parseInt(fullData.time) * 1000),
+//         soil_ch1: {
+//             soilmoisture: {
+//                 time: storeD?.soil_ch1?.soilmoisture?.time,
+//                 unit: storeD?.soil_ch1?.soilmoisture?.unit,
+//                 value: storeD?.soil_ch1?.soilmoisture?.value
+//             }
+//         },
+//         soil_ch2: {
+//             soilmoisture: {
+//                 time: storeD?.soil_ch2?.soilmoisture?.time,
+//                 unit: storeD?.soil_ch2?.soilmoisture?.unit,
+//                 value: storeD?.soil_ch2?.soilmoisture?.value
+//             }
+//         },
+//         soil_ch3: {
+//             soilmoisture: {
+//                 time: storeD?.soil_ch3?.soilmoisture?.time,
+//                 unit: storeD?.soil_ch3?.soilmoisture?.unit,
+//                 value: storeD?.soil_ch3?.soilmoisture?.value
+//             }
+//         },
+//         soil_ch4: {
+//             soilmoisture: {
+//                 time: storeD?.soil_ch4?.soilmoisture?.time,
+//                 unit: storeD?.soil_ch4?.soilmoisture?.unit,
+//                 value: storeD?.soil_ch4?.soilmoisture?.value
+//             }
+//         },
+//         soil_ch5: {
+//             soilmoisture: {
+//                 time: storeD?.soil_ch5?.soilmoisture?.time,
+//                 unit: storeD?.soil_ch5?.soilmoisture?.unit,
+//                 value: storeD?.soil_ch5?.soilmoisture?.value
+//             }
+//         },
+//         soil_ch6: {
+//             soilmoisture: {
+//                 time: storeD?.soil_ch6?.soilmoisture?.time,
+//                 unit: storeD?.soil_ch6?.soilmoisture?.unit,
+//                 value: storeD?.soil_ch6?.soilmoisture?.value
+//             }
+//         },
+//         soil_ch7: {
+//             soilmoisture: {
+//                 time: storeD?.soil_ch7?.soilmoisture?.time,
+//                 unit: storeD?.soil_ch7?.soilmoisture?.unit,
+//                 value: storeD?.soil_ch7?.soilmoisture?.value
+//             }
+//         },
+//         soil_ch8: {
+//             soilmoisture: {
+//                 time: storeD?.soil_ch8?.soilmoisture?.time,
+//                 unit: storeD?.soil_ch8?.soilmoisture?.unit,
+//                 value: storeD?.soil_ch8?.soilmoisture?.value
+//             }
+//         },
+//         soilmoisture_sensor_ch4: {
+//             soilmoisture: {
+//                 time: storeD?.soilmoisture_sensor_ch4?.soilmoisture?.time,
+//                 unit: storeD?.soilmoisture_sensor_ch4?.soilmoisture?.unit,
+//                 value: storeD?.soilmoisture_sensor_ch4?.soilmoisture?.value
+//             }
+//         },
+//         soilmoisture_sensor_ch5: {
+//             soilmoisture: {
+//                 time: storeD?.soilmoisture_sensor_ch5?.soilmoisture?.time,
+//                 unit: storeD?.soilmoisture_sensor_ch5?.soilmoisture?.unit,
+//                 value: storeD?.soilmoisture_sensor_ch5?.soilmoisture?.value
+//             }
+//         },
+//         soilmoisture_sensor_ch6: {
+//             time: storeD?.soilmoisture_sensor_ch6?.soilmoisture?.time,
+//             unit: storeD?.soilmoisture_sensor_ch6?.soilmoisture?.unit,
+//             value: storeD?.soilmoisture_sensor_ch6?.soilmoisture?.value
+//         },
+//         soilmoisture_sensor_ch7: {
+//             time: storeD?.soilmoisture_sensor_ch7?.soilmoisture?.time,
+//             unit: storeD?.soilmoisture_sensor_ch7?.soilmoisture?.unit,
+//             value: storeD?.soilmoisture_sensor_ch7?.soilmoisture?.value
+//         },
+//         soilmoisture_sensor_ch8: {
+//             time: storeD?.soilmoisture_sensor_ch8?.soilmoisture?.time,
+//             unit: storeD?.soilmoisture_sensor_ch8?.soilmoisture?.unit,
+//             value: storeD?.soilmoisture_sensor_ch8?.soilmoisture?.value
+//         },
+//         metadata: {
+//             data_type: 'ecowitt',
+//             deviceMAC: deviceInfo.macAddress || "N/A",
+//             location: {
+//                 lat: deviceInfo.infos.coords.lat,
+//                 lon: deviceInfo.infos.coords.lon
+//             }
+//         }
+//     });
 
-    await toDb.save();
-};
+//     await toDb.save();
+// };
 
 // Additional EcoWitt-specific functions as needed
